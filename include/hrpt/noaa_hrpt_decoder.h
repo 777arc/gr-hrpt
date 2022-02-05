@@ -1,27 +1,12 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2009,2012 Free Software Foundation, Inc.
+ * Copyright 2022 gr-hrpt author.
  *
- * This file is part of GNU Radio
- *
- * GNU Radio is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3, or (at your option)
- * any later version.
- *
- * GNU Radio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with GNU Radio; see the file COPYING.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#ifndef INCLUDED_NOAA_HRPT_DECODER_H
-#define INCLUDED_NOAA_HRPT_DECODER_H
+#ifndef INCLUDED_HRPT_NOAA_HRPT_DECODER_H
+#define INCLUDED_HRPT_NOAA_HRPT_DECODER_H
 
 #include <hrpt/api.h>
 #include <gnuradio/sync_block.h>
@@ -30,22 +15,28 @@ namespace gr {
   namespace hrpt {
 
     /*!
-     * \brief NOAA HRPT Decoder
-     * \ingroup noaa_blk
+     * \brief <+description of block+>
+     * \ingroup hrpt
+     *
      */
-    class HRPT_API noaa_hrpt_decoder : virtual public sync_block
+    class HRPT_API noaa_hrpt_decoder : virtual public gr::sync_block
     {
-    public:
-      // gr::hrpt::noaa_hrpt_decoder::sptr
-      typedef boost::shared_ptr<noaa_hrpt_decoder> sptr;
+     public:
+      typedef std::shared_ptr<noaa_hrpt_decoder> sptr;
 
       /*!
-       * \brief Make NOAA HRPT Decoder
+       * \brief Return a shared_ptr to a new instance of hrpt::noaa_hrpt_decoder.
+       *
+       * To avoid accidental use of raw pointers, hrpt::noaa_hrpt_decoder's
+       * constructor is in a private implementation
+       * class. hrpt::noaa_hrpt_decoder::make is the public interface for
+       * creating new instances.
        */
       static sptr make(bool verbose, bool output_files);
     };
 
-  } /* namespace hrpt */
-} /* namespace gr */
+  } // namespace hrpt
+} // namespace gr
 
-#endif /* INCLUDED_NOAA_HRPT_DECODER_H */
+#endif /* INCLUDED_HRPT_NOAA_HRPT_DECODER_H */
+

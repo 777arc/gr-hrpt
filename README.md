@@ -1,3 +1,5 @@
+Forked from https://github.com/altillimity/gr-hrpt and updated to 3.9 (only the NOAA blocks)
+
 # gr-hrpt
 
 HRPT Blocks from gr-noaa and others ported to GNU Radio 3.8+
