@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: HRPT NOAA Decoder
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -83,28 +84,53 @@ blocks:
     coordinate: [664, 444.0]
     rotation: 0
     state: enabled
-- name: blocks_file_source_0
-  id: blocks_file_source
+- name: azure_software_radio_blob_sink_0
+  id: azure_software_radio_blob_sink
   parameters:
     affinity: ''
     alias: ''
-    begin_tag: pmt.PMT_NIL
+    authentication_method: default
+    blob_name: ''
+    block_len: '500000'
     comment: ''
-    file: /home/marc/Downloads/NOAA_19_1698Mhz_6MSPS_Final_short.i8
-    length: '0'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    offset: '0'
-    repeat: 'False'
-    type: byte
+    connection_str: ''
+    container_name: ''
+    queue_size: '4'
+    retry_total: '10'
+    type: s8
+    url: ''
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [40, 132.0]
+    coordinate: [1408, 236.0]
     rotation: 0
-    state: true
+    state: disabled
+- name: azure_software_radio_blob_source_0
+  id: azure_software_radio_blob_source
+  parameters:
+    affinity: ''
+    alias: ''
+    authentication_method: url_with_sas
+    blob_name: NOAA_19_1698Mhz_6MSPS_Final_short.i8
+    comment: ''
+    connection_str: ''
+    container_name: satellite
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    queue_size: '4'
+    retry_total: '10'
+    type: s8
+    url: https://softwareradiohelloworld.blob.core.windows.net
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 140.0]
+    rotation: 0
+    state: enabled
 - name: blocks_float_to_complex_1
   id: blocks_float_to_complex
   parameters:
@@ -174,9 +200,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [464, 164.0]
+    coordinate: [456, 172.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: decoder
   id: noaa_hrpt_decoder
   parameters:
@@ -189,7 +215,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1240, 268.0]
+    coordinate: [1232, 268.0]
     rotation: 0
     state: enabled
 - name: digital_binary_slicer_fb_0
@@ -331,7 +357,7 @@ blocks:
     tr_slope: qtgui.TRIG_SLOPE_POS
     tr_tag: '""'
     type: complex
-    update_time: '0.02'
+    update_time: '0.1'
     width1: '1'
     width10: '1'
     width2: '1'
@@ -413,7 +439,7 @@ blocks:
     tr_tag: '""'
     type: complex
     units: dB
-    update_time: '0.03'
+    update_time: '0.1'
     width1: '1'
     width10: '1'
     width2: '1'
@@ -431,14 +457,15 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [656, 168.0]
+    coordinate: [648, 156.0]
     rotation: 0
-    state: true
+    state: enabled
 
 connections:
 - [analog_agc_xx_0, '0', pll, '0']
 - [analog_noise_source_x_0, '0', blocks_float_to_complex_1, '1']
-- [blocks_file_source_0, '0', blocks_interleaved_char_to_complex_0, '0']
+- [azure_software_radio_blob_source_0, '0', blocks_interleaved_char_to_complex_0,
+  '0']
 - [blocks_float_to_complex_1, '0', qtgui_const_sink_x_0_0, '0']
 - [blocks_interleaved_char_to_complex_0, '0', blocks_throttle_0, '0']
 - [blocks_moving_average_xx_0, '0', digital_clock_recovery_mm_xx_0, '0']
